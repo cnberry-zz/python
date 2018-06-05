@@ -21,13 +21,13 @@ proc do_load_ip {ip} {
 	load_system $ip
 
 	set ret []
-	set inst [get_instances]
-	set params [get_instance_parameters $inst]
+#	set inst [get_instances]
+#	set params [get_instance_parameters $inst]
 
-	foreach param $params {
-		set value [get_instance_parameter_value $inst $param]
-		lappend ret "qsys_parameter_$param=\"$value\""
-	}
+#	foreach param $params {
+#		set value [get_instance_parameter_value $inst $param]
+#		lappend ret "qsys_parameter_$param=\"$value\""
+#	}
 
 	return $ret
 }
@@ -54,3 +54,15 @@ foreach defaultParam $defaults ipParam $current {
 close $outfile
 
 }
+
+# create and save default ip
+proc do_create_and_save_default_ip {ip_name ip_type} {
+
+	create_system $ip_name
+	add_instance X $ip_type
+	set_instance_property X AUTO_EXPORT true
+	sync_sysinfo_parameters
+	save_system $ip_name
+
+}
+
